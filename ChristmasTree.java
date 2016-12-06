@@ -1,13 +1,15 @@
+import java.util.*;
+
 public class ChristmasTree{
 
   private String type;
   private String size;
-  private Decoration[] branches;
+  private ArrayList<Decoratable> branches;
 
   public ChristmasTree(String type, String size) {
     this.type = type;
     this.size = size;
-    this.branches = new Decoration [50];
+    this.branches = new ArrayList<Decoratable>();
   }
 
   public String getType() {
@@ -19,31 +21,21 @@ public class ChristmasTree{
   }
 
   public int decorationCount(){
-    int count = 0;
-    for (Decoration decoration : branches) {
-      if (decoration != null){
-        count ++;
-      }
+    return branches.size();
+  }
+
+  public void addDecoration(Decoratable decoration){
+    branches.add(decoration);
+  }
+
+  public Decoratable breakDecoration() {
+    if (decorationCount() > 0) {
+      return branches.remove(0);
     }
-    return count;
-  }
+    return null;
+   }
 
-  public boolean branchesOccupied(){
-    return this.decorationCount() == branches.length;
+  public void removeAllDecorations(){
+    branches.clear();
   }
-
-  public void addDecoration(Decoration bauble){
-    if (branchesOccupied()) {
-      return;
-    }
-    int decorationCount = this.decorationCount();
-    branches[decorationCount] = bauble; 
-  }
-
-  public void removeDecoration(){
-    for (int i = 0; i < branches.length; i++){
-      branches[i] = null;
-    }
-  }
-
 }

@@ -1,14 +1,16 @@
-import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.*;
 import org.junit.*;
 
 public class TestChristmasTree{
   ChristmasTree christmasTree1;
-  Decoration bauble;
+  Bauble bauble;
+  Lights lights;
+
 
   @Before
   public void before() {
     christmasTree1 = new ChristmasTree("Douglas Fir", "Large");
-    bauble = new Decoration();
+    bauble = new Bauble();
   }
 
   @Test
@@ -33,20 +35,23 @@ public class TestChristmasTree{
   }
 
   @Test
-  public void cannotAddDecorationsWhenBranchesAreFull(){
-    for (int i = 0; i < 55; i++){
-      christmasTree1.addDecoration(bauble);
-    }
-    assertEquals(50, christmasTree1.decorationCount());
-  }
-
-  @Test
   public void
-    canRemoveDecorations(){
+    canRemoveAllDecorations(){
       christmasTree1.addDecoration(bauble);
-      assertEquals(1, christmasTree1.decorationCount());
-      christmasTree1.removeDecoration();
+      christmasTree1.addDecoration(lights);
+      assertEquals(2, christmasTree1.decorationCount());
+      christmasTree1.removeAllDecorations();
       assertEquals(0, christmasTree1.decorationCount());
+    }
+
+    @Test
+    public void breakDecoration() {
+      christmasTree1.addDecoration(bauble);
+      Decoratable decoration = christmasTree1.breakDecoration();
+      Bauble original = (Bauble)decoration;
+      // assertNotNull(food);
+      // assertNotNull makes sure that something is returned, regardless if it is a salmon or a human. 
+      assertEquals("Shiney sparkly baubles", original.sparkle());
     }
 
 }
